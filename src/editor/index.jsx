@@ -376,9 +376,19 @@ export class MdEditor extends Component {
   }
 
   _handleImagePaste(e) {
+    e.preventDefault();
+
     e.persist();
-    const file = e.target.files[0];
-    this.onImagePasted(file);
+    const files = e.clipboardData.files;
+
+    console.log("files", files);
+
+    if (files.length === 0 || !/\.(png|jpe?g|bmp)$/.test(files[0].name)) {
+      // Not a valid image.
+      return;
+    }
+
+    this.onImagePasted(files[0]);
   }
 
   onImagePasted(file) {
@@ -389,9 +399,17 @@ export class MdEditor extends Component {
   }
 
   _handleImageDrop(e) {
+    e.preventDefault();
+
     e.persist();
-    const file = e.target.files[0];
-    this.onImageDroped(file);
+    const files = e.dataTransfer.files;
+
+    if (files.length === 0 || !/\.(png|jpe?g|bmp)$/.test(files[0].name)) {
+      // Not a valid image.
+      return;
+    }
+
+    this.onImageDroped(files[0]);
   }
 
   onImageDroped(file) {

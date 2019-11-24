@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 declare namespace ReactMarkdownEditorLite {
   export interface MdEditorProps {
@@ -25,16 +25,20 @@ declare namespace ReactMarkdownEditorLite {
       table?: {
         maxRow: number;
         maxCol: number;
-      }
-    }
-    onChange?: (data: {
-      text: string;
-      html: string;
-    }, event: any) => void;
+      };
+    };
+    onChange?: (
+      data: {
+        text: string;
+        html: string;
+      },
+      event: any
+    ) => void;
     onImageUpload?: (file: File, callback: (url: string) => void) => void;
+    onImagePaste?: (file: File, callback: (url: string) => void) => void;
+    onImageDrop?: (file: File, callback: (url: string) => void) => void;
   }
-  class MdEditor extends React.Component<MdEditorProps, any> {
-  }
+  class MdEditor extends React.Component<MdEditorProps, any> {}
 }
 
 import MdEditor = ReactMarkdownEditorLite.MdEditor;
