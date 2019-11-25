@@ -14,6 +14,7 @@ import mark from "markdown-it-mark";
 import tasklists from "markdown-it-task-lists";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-light.css";
+import container from "markdown-it-container";
 // import 'highlight.js/styles/github.css'
 // import content from './content.js';
 import content from "./content.1.js";
@@ -50,6 +51,20 @@ class Demo extends React.Component {
       .use(abbreviation)
       .use(insert)
       .use(mark)
+      .use(container, "default", {
+        render(tokens, idx) {
+          if (tokens[idx].nesting === 1) {
+            return "<div class='note default'>\n";
+          } else {
+            return "</div>\n";
+          }
+        }
+      })
+      .use(container, "primary")
+      .use(container, "success")
+      .use(container, "info")
+      .use(container, "warning")
+      .use(container, "danger")
       .use(tasklists, { enabled: this.taskLists });
   }
 

@@ -7,9 +7,9 @@ import NavigationBar from "../components/NavigationBar";
 import DropList from "../components/DropList";
 import HeaderList from "../components/HeaderList";
 import TableList from "../components/TableList";
+import NoteList from "../components/NoteList";
 import InputFile from "../components/InputFile";
 import Icon from "../components/Icon";
-import ToolBar from "../components/ToolBar";
 import _config from "../config.js";
 
 import "./index.less";
@@ -80,7 +80,8 @@ export class MdEditor extends Component {
       htmlType: "render", // 'render' 'source'
       dropButton: {
         header: false,
-        table: false
+        table: false,
+        note: false
       },
       fullScreen: false,
       table: this.config.table
@@ -236,7 +237,13 @@ export class MdEditor extends Component {
       "code",
       "table",
       "image",
-      "link"
+      "link",
+      "defaultnote",
+      "primarynote",
+      "successnote",
+      "infonote",
+      "warningnote",
+      "dangernote"
     ];
     if (clearList.indexOf(type) > -1) {
       if (!this.selection.isSelected) {
@@ -613,6 +620,29 @@ export class MdEditor extends Component {
                 </span>
                 <span
                   className="button"
+                  title="note"
+                  onMouseEnter={() => this.showDropList("note", true)}
+                  onMouseLeave={() => this.showDropList("note", false)}
+                >
+                  <Icon type="icon-asterisk" />
+                  <DropList
+                    show={dropButton.note}
+                    onClose={() => {
+                      this.showDropList("note", false);
+                    }}
+                    render={() => {
+                      return (
+                        <NoteList
+                          onSelectNote={note => {
+                            this.handleDecorate(note);
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                </span>
+                <span
+                  className="button"
                   title="hr"
                   onClick={() => this.handleDecorate("hr")}
                 >
@@ -683,7 +713,6 @@ export class MdEditor extends Component {
                 >
                   <Icon type="icon-link" />
                 </span>
-
                 <span
                   className="button"
                   title="empty"
