@@ -380,6 +380,9 @@ export class MdEditor extends Component {
 
     const files = e.clipboardData.files;
     if (files.length > 0) {
+      // If it is a file, preventDefault
+      e.preventDefault();
+
       if (files.length === 0 || !/\.(png|jpe?g|bmp)$/.test(files[0].name)) {
         // Not a valid image.
         return;
@@ -700,10 +703,10 @@ export class MdEditor extends Component {
               <div className="button-wrap">
                 <span
                   className="button"
-                  title={view.md ? "column" : "preview"}
-                  onClick={this.handleHtmlPreview}
+                  title={view.html ? "column" : "preview"}
+                  onClick={this.handleMdPreview}
                 >
-                  {view.md ? (
+                  {view.html ? (
                     <Icon type="icon-columns" />
                   ) : (
                     <Icon type="icon-desktop" />
